@@ -145,8 +145,8 @@ struct Impl {
     SharedObject::Ptr _gpurenderer_loader;
     std::unique_ptr<Renderer> _renderer;
 
-    const int _thickness = 2;
-    const double _radius_multiplier = 0.0025;
+    const int _thickness = 6;
+    const double _radius_multiplier = 0.0035;
     const Color _default_color = indexToColor(1);
     // Position for full-frame text
     const cv::Point2f _ff_text_position = cv::Point2f(0, 25.f);
@@ -462,8 +462,27 @@ bool Impl::render(GstBuffer *buffer) {
     return true;
 }
 
+static const cv::Scalar colors[18] = {cv::Scalar(255, 0, 0),
+				      cv::Scalar(255, 85, 0),
+				      cv::Scalar(255, 170, 0),
+				      cv::Scalar(255, 255, 0),
+				      cv::Scalar(170, 255, 0),
+				      cv::Scalar(85, 255, 0),
+				      cv::Scalar(0, 255, 0),
+				      cv::Scalar(0, 255, 85),
+				      cv::Scalar(0, 255, 170),
+				      cv::Scalar(0, 255, 255),
+				      cv::Scalar(0, 170, 255),
+				      cv::Scalar(0, 85, 255),
+				      cv::Scalar(0, 0, 255),
+				      cv::Scalar(85, 0, 255),
+				      cv::Scalar(170, 0, 255),
+				      cv::Scalar(255, 0, 255),
+				      cv::Scalar(255, 0, 170),
+				      cv::Scalar(255, 0, 85)};
+
 void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Prim> &prims) const {
-    size_t color_index = roi.label_id();
+    //size_t color_index = roi.label_id();
 
     auto rect = roi.normalized_rect();
     if (rect.w && rect.h) {
@@ -482,7 +501,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
     const int object_id = roi.object_id();
     if (object_id > 0) {
         text << object_id << ": ";
-        color_index = object_id;
+        //color_index = 2;
     }
 
     appendStr(text, roi.label());
@@ -496,7 +515,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
     }
 
     // put rectangle
-    Color color = indexToColor(color_index);
+    Color color = indexToColor(2);
     cv::Rect bbox_rect(rect.x, rect.y, rect.w, rect.h);
     prims.emplace_back(render::Rect(bbox_rect, color, _thickness));
 
@@ -536,7 +555,7 @@ void Impl::preparePrimsForTensor(const GVA::Tensor &tensor, GVA::Rect<double> re
                 x2 = safe_convert<int>(rect.x + rect.w * data[0]);
                 y2 = safe_convert<int>(rect.y + rect.h * data[1]);
             }
-            prims.emplace_back(render::Line(cv::Point2i(x, y), cv::Point2i(x2, y2), _default_color, _thickness));
+            prims.emplace_back(render::ELine(cv::Point2i(x, y), cv::Point2i(x2, y2), colors[i], _thickness));
         }
     }
 
@@ -574,10 +593,9 @@ void Impl::preparePrimsForKeypoints(const GVA::Tensor &tensor, GVA::Rect<double>
 
         int x_lm = safe_convert<int>(rectangle.x + rectangle.w * x_real);
         int y_lm = safe_convert<int>(rectangle.y + rectangle.h * y_real);
-        size_t radius = 1 + safe_convert<size_t>(_radius_multiplier * (rectangle.w + rectangle.h));
 
-        Color color = indexToColor(i);
-        prims.emplace_back(render::Circle(cv::Point2i(x_lm, y_lm), radius, color, cv::FILLED));
+        Color color = colors[i];
+        prims.emplace_back(render::Circle(cv::Point2i(x_lm, y_lm), 4, color, cv::FILLED));
     }
 
     preparePrimsForKeypointConnections(tensor.gst_structure(), keypoints_data, dimensions, rectangle, prims);

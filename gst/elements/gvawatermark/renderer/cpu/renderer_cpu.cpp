@@ -45,6 +45,8 @@ void RendererYUV::draw_backend(std::vector<cv::Mat> &image_planes, std::vector<r
     for (auto &p : prims) {
         if (std::holds_alternative<render::Line>(p)) {
             draw_line(image_planes, std::get<render::Line>(p));
+        } else if (std::holds_alternative<render::ELine>(p)) {
+            draw_eline(image_planes, std::get<render::Line>(p));
         } else if (std::holds_alternative<render::Rect>(p)) {
             draw_rectangle(image_planes, std::get<render::Rect>(p));
         } else if (std::holds_alternative<render::Circle>(p)) {
@@ -133,6 +135,21 @@ void RendererI420::draw_line(std::vector<cv::Mat> &mats, render::Line line) {
     cv::line(v, pos1_u_v, pos2_u_v, line.color[2], thick);
 }
 
+void RendererI420::draw_eline(std::vector<cv::Mat> &mats, render::Line line) {
+    check_planes<3>(mats);
+    cv::Mat &y = mats[0];
+    cv::Mat &u = mats[1];
+    cv::Mat &v = mats[2];
+
+    cv::line(y, line.pt1, line.pt2, line.color[0], line.thick);
+
+    cv::Point2f pos1_u_v(calc_point_for_u_v_planes(line.pt1));
+    cv::Point2f pos2_u_v(calc_point_for_u_v_planes(line.pt2));
+    int thick = calc_thick_for_u_v_planes(line.thick);
+    cv::line(u, pos1_u_v, pos2_u_v, line.color[1], thick);
+    cv::line(v, pos1_u_v, pos2_u_v, line.color[2], thick);
+}
+
 void RendererNV12::draw_rectangle(std::vector<cv::Mat> &mats, render::Rect rect) {
     check_planes<2>(mats);
     cv::Mat &y = mats[0];
@@ -193,5 +210,9 @@ void RendererBGR::draw_text(std::vector<cv::Mat> &mats, render::Text text) {
 }
 
 void RendererBGR::draw_line(std::vector<cv::Mat> &mats, render::Line line) {
+    cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
+}
+
+void RendererBGR::draw_eline(std::vector<cv::Mat> &mats, render::Line line) {
     cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
 }

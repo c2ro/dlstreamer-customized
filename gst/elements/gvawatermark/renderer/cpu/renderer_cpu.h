@@ -76,4 +76,5 @@ class RendererBGR : public RendererYUV {
     void draw_circle(std::vector<cv::Mat> &mats, render::Circle circle) override;
     void draw_text(std::vector<cv::Mat> &mats, render::Text text) override;
     void draw_line(std::vector<cv::Mat> &mats, render::Line line) override;
+    void draw_line(std::vector<cv::Mat> &mats, render::ELine line) override;
 };

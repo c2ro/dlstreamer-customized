@@ -66,6 +66,19 @@ struct Line {
     }
 };
 
-using Prim = std::variant<Text, Rect, Circle, Line>;
+struct ELine {
+    cv::Point pt1;
+    cv::Point pt2;
+    cv::Scalar color;
+    int thick;
+
+    Line() = default;
+
+    Line(const cv::Point &pt1, const cv::Point &pt2, const cv::Scalar &color, int thick = 1)
+        : pt1(pt1), pt2(pt2), color(color), thick(thick) {
+    }
+};
+
+using Prim = std::variant<Text, Rect, Circle, Line, ELine>;
 
 } // namespace render

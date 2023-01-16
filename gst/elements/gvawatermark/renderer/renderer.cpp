@@ -50,6 +50,10 @@ void Renderer::convert_prims_color(std::vector<render::Prim> &prims) {
             render::Line line = std::get<render::Line>(p);
             line.color = _color_converter->convert(line.color);
             p = line;
+        } else if (std::holds_alternative<render::ELine>(p)) {
+            render::ELine line = std::get<render::ELine>(p);
+            line.color = _color_converter->convert(line.color);
+            p = line;
         } else if (std::holds_alternative<render::Rect>(p)) {
             render::Rect rect = std::get<render::Rect>(p);
             rect.color = _color_converter->convert(rect.color);
