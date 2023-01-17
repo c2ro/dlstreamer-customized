@@ -239,8 +239,5 @@ void RendererBGR::draw_eline(std::vector<cv::Mat> &mats, render::ELine line) {
     std::vector<cv::Point> polygon;
     cv::ellipse2Poly(cv::Point2d(meanX, meanY), cv::Size2d(length / 2, line.thick), angle, 0, 360, 1, polygon);
     cv::fillConvexPoly(mats[0], polygon, line.color);
-
-
-      cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
     }
 }
