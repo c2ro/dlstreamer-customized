@@ -54,6 +54,27 @@ const std::vector<Color> color_table = {Color(255, 0, 0),   Color(0, 255, 0),   
                                         Color(255, 85, 0),  Color(85, 255, 0),  Color(0, 255, 85),  Color(0, 85, 255),
                                         Color(85, 0, 255),  Color(255, 0, 85)};
 
+static const cv::Scalar colors[19] = {cv::Scalar(255, 0, 0),
+				      cv::Scalar(255, 85, 0),
+				      cv::Scalar(255, 170, 0),
+				      cv::Scalar(255, 255, 0),
+				      cv::Scalar(170, 255, 0),
+				      cv::Scalar(85, 255, 0),
+				      cv::Scalar(0, 255, 0),
+				      cv::Scalar(0, 255, 85),
+				      cv::Scalar(0, 255, 170),
+				      cv::Scalar(0, 255, 255),
+				      cv::Scalar(0, 170, 255),
+				      cv::Scalar(0, 85, 255),
+				      cv::Scalar(0, 0, 255),
+				      cv::Scalar(85, 0, 255),
+				      cv::Scalar(170, 0, 255),
+				      cv::Scalar(255, 0, 255),
+				      cv::Scalar(255, 0, 170),
+				      cv::Scalar(255, 0, 85),
+              cv::Scalar(200, 156, 110)
+            };
+
 Color indexToColor(size_t index) {
     return color_table[index % color_table.size()];
 }
@@ -462,26 +483,7 @@ bool Impl::render(GstBuffer *buffer) {
     return true;
 }
 
-static const cv::Scalar colors[19] = {cv::Scalar(255, 0, 0),
-				      cv::Scalar(255, 85, 0),
-				      cv::Scalar(255, 170, 0),
-				      cv::Scalar(255, 255, 0),
-				      cv::Scalar(170, 255, 0),
-				      cv::Scalar(85, 255, 0),
-				      cv::Scalar(0, 255, 0),
-				      cv::Scalar(0, 255, 85),
-				      cv::Scalar(0, 255, 170),
-				      cv::Scalar(0, 255, 255),
-				      cv::Scalar(0, 170, 255),
-				      cv::Scalar(0, 85, 255),
-				      cv::Scalar(0, 0, 255),
-				      cv::Scalar(85, 0, 255),
-				      cv::Scalar(170, 0, 255),
-				      cv::Scalar(255, 0, 255),
-				      cv::Scalar(255, 0, 170),
-				      cv::Scalar(255, 0, 85),
-              cv::Scalar(200, 156, 110)
-            };
+
 
 void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Prim> &prims) const {
     //size_t color_index = roi.label_id();
