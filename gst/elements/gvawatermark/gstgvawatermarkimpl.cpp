@@ -169,7 +169,7 @@ struct Impl {
     SharedObject::Ptr _gpurenderer_loader;
     std::unique_ptr<Renderer> _renderer;
 
-    const int _thickness = 4;
+    const int _thickness = 5;
     const double _radius_multiplier = 0.0035;
     const cv::Scalar _default_color = cv::Scalar(200, 156, 110);
     // Position for full-frame text
