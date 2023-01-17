@@ -665,7 +665,7 @@ void Impl::preparePrimsForKeypointConnections(GstStructure *s, const std::vector
         int x2 = safe_convert<int>(rectangle.x + rectangle.w * x2_real);
         int y2 = safe_convert<int>(rectangle.y + rectangle.h * y2_real);
 
-        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i], _thickness));
+        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i % 18], _thickness));
     }
 
     g_value_array_free(point_connections);
