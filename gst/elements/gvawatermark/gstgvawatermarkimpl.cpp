@@ -145,9 +145,9 @@ struct Impl {
     SharedObject::Ptr _gpurenderer_loader;
     std::unique_ptr<Renderer> _renderer;
 
-    const int _thickness = 6;
+    const int _thickness = 4;
     const double _radius_multiplier = 0.0035;
-    const Color _default_color = indexToColor(1);
+    const Color _default_color = colors[18];
     // Position for full-frame text
     const cv::Point2f _ff_text_position = cv::Point2f(0, 25.f);
     struct FontCfg {
@@ -462,7 +462,7 @@ bool Impl::render(GstBuffer *buffer) {
     return true;
 }
 
-static const cv::Scalar colors[18] = {cv::Scalar(255, 0, 0),
+static const cv::Scalar colors[19] = {cv::Scalar(255, 0, 0),
 				      cv::Scalar(255, 85, 0),
 				      cv::Scalar(255, 170, 0),
 				      cv::Scalar(255, 255, 0),
@@ -479,7 +479,9 @@ static const cv::Scalar colors[18] = {cv::Scalar(255, 0, 0),
 				      cv::Scalar(170, 0, 255),
 				      cv::Scalar(255, 0, 255),
 				      cv::Scalar(255, 0, 170),
-				      cv::Scalar(255, 0, 85)};
+				      cv::Scalar(255, 0, 85),
+              cv::Scalar(200, 156, 110)
+            };
 
 void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Prim> &prims) const {
     //size_t color_index = roi.label_id();
