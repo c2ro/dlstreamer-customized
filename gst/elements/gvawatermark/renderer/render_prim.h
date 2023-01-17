@@ -72,9 +72,9 @@ struct ELine {
     cv::Scalar color;
     int thick;
 
-    Line() = default;
+    ELine() = default;
 
-    Line(const cv::Point &pt1, const cv::Point &pt2, const cv::Scalar &color, int thick = 1)
+    ELine(const cv::Point &pt1, const cv::Point &pt2, const cv::Scalar &color, int thick = 1)
         : pt1(pt1), pt2(pt2), color(color), thick(thick) {
     }
 };
