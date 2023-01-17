@@ -226,20 +226,21 @@ void RendererBGR::draw_line(std::vector<cv::Mat> &mats, render::Line line) {
 }
 
 void RendererBGR::draw_eline(std::vector<cv::Mat> &mats, render::ELine line) {
+  const cv::Point2f absentKeypoint(-1.0f, -1.0f);
   std::pair<cv::Point2f, cv::Point2f> limbKeypoints(line.pt1,line.pt2);
   if (limbKeypoints.first == absentKeypoint || limbKeypoints.second == absentKeypoint) {
-      continue;
-  }
 
-  float meanX = (limbKeypoints.first.x + limbKeypoints.second.x) / 2;
-  float meanY = (limbKeypoints.first.y + limbKeypoints.second.y) / 2;
-  cv::Point difference = limbKeypoints.first - limbKeypoints.second;
-  double length = std::sqrt(difference.x * difference.x + difference.y * difference.y);
-  int angle = static_cast<int>(std::atan2(difference.y, difference.x) * 180 / CV_PI);
-  std::vector<cv::Point> polygon;
-  cv::ellipse2Poly(cv::Point2d(meanX, meanY), cv::Size2d(length / 2, line.thick), angle, 0, 360, 1, polygon);
-  cv::fillConvexPoly(mats[0], polygon, line.color);
+  } else {
+    float meanX = (limbKeypoints.first.x + limbKeypoints.second.x) / 2;
+    float meanY = (limbKeypoints.first.y + limbKeypoints.second.y) / 2;
+    cv::Point difference = limbKeypoints.first - limbKeypoints.second;
+    double length = std::sqrt(difference.x * difference.x + difference.y * difference.y);
+    int angle = static_cast<int>(std::atan2(difference.y, difference.x) * 180 / CV_PI);
+    std::vector<cv::Point> polygon;
+    cv::ellipse2Poly(cv::Point2d(meanX, meanY), cv::Size2d(length / 2, line.thick), angle, 0, 360, 1, polygon);
+    cv::fillConvexPoly(mats[0], polygon, line.color);
 
 
-    cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
+      cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
+    }
 }
