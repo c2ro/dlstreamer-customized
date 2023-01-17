@@ -519,7 +519,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
     }
 
     // put rectangle
-    Color color = indexToColor(2);
+    Color color = colors[18];
     cv::Rect bbox_rect(rect.x, rect.y, rect.w, rect.h);
     prims.emplace_back(render::Rect(bbox_rect, color, _thickness));
 
