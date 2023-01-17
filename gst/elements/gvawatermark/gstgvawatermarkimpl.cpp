@@ -530,7 +530,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
         cv::Point2f pos(rect.x, rect.y - 5.f);
         if (pos.y < 0)
             pos.y = rect.y + 30.f;
-        prims.emplace_back(render::Text(text.str(), pos, _font.type, _font.scale, color));
+        prims.emplace_back(render::Text(text.str(), pos, _font.type, _font.scale, _default_color));
     }
 }
 
