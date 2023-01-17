@@ -171,7 +171,7 @@ struct Impl {
 
     const int _thickness = 4;
     const double _radius_multiplier = 0.0035;
-    const Color _default_color = colors[18];
+    const Color _default_color = cv::Scalar(200, 156, 110);
     // Position for full-frame text
     const cv::Point2f _ff_text_position = cv::Point2f(0, 25.f);
     struct FontCfg {
