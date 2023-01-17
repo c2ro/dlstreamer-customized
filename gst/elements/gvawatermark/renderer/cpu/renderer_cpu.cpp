@@ -225,6 +225,6 @@ void RendererBGR::draw_line(std::vector<cv::Mat> &mats, render::Line line) {
     cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
 }
 
-void RendererBGR::draw_eline(std::vector<cv::Mat> &mats, render::Line line) {
+void RendererBGR::draw_eline(std::vector<cv::Mat> &mats, render::ELine line) {
     cv::line(mats[0], line.pt1, line.pt2, line.color, line.thick);
 }
