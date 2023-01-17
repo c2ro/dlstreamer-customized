@@ -171,7 +171,7 @@ struct Impl {
 
     const int _thickness = 4;
     const double _radius_multiplier = 0.0035;
-    const Color _default_color = Color(200, 156, 110);
+    const cv::Scalar _default_color = cv::Scalar(200, 156, 110);
     // Position for full-frame text
     const cv::Point2f _ff_text_position = cv::Point2f(0, 25.f);
     struct FontCfg {
@@ -522,9 +522,8 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
     }
 
     // put rectangle
-    Color color = cv::Scalar(200, 156, 110);
     cv::Rect bbox_rect(rect.x, rect.y, rect.w, rect.h);
-    prims.emplace_back(render::Rect(bbox_rect, color, _thickness));
+    prims.emplace_back(render::Rect(bbox_rect, _default_color, _thickness));
 
     // put text
     if (text.str().size() != 0) {
@@ -672,7 +671,7 @@ void Impl::preparePrimsForKeypointConnections(GstStructure *s, const std::vector
         int x2 = safe_convert<int>(rectangle.x + rectangle.w * x2_real);
         int y2 = safe_convert<int>(rectangle.y + rectangle.h * y2_real);
 
-        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i % 21], _thickness));
+        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i % 20], _thickness));
     }
 
     g_value_array_free(point_connections);
