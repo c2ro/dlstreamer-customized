@@ -54,7 +54,8 @@ const std::vector<Color> color_table = {Color(255, 0, 0),   Color(0, 255, 0),   
                                         Color(255, 85, 0),  Color(85, 255, 0),  Color(0, 255, 85),  Color(0, 85, 255),
                                         Color(85, 0, 255),  Color(255, 0, 85)};
 
-static const cv::Scalar colors[19] = {cv::Scalar(255, 0, 0),
+static const cv::Scalar colors[21] = {
+              cv::Scalar(255, 0, 0),
 				      cv::Scalar(255, 85, 0),
 				      cv::Scalar(255, 170, 0),
 				      cv::Scalar(255, 255, 0),
@@ -72,7 +73,9 @@ static const cv::Scalar colors[19] = {cv::Scalar(255, 0, 0),
 				      cv::Scalar(255, 0, 255),
 				      cv::Scalar(255, 0, 170),
 				      cv::Scalar(255, 0, 85),
-              cv::Scalar(200, 156, 110)
+              cv::Scalar(200, 156, 110),
+              cv::Scalar(255, 255, 60),
+              cv::Scalar(177, 156, 110)
             };
 
 Color indexToColor(size_t index) {
@@ -519,7 +522,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
     }
 
     // put rectangle
-    Color color = colors[18];
+    Color color = _default_color;
     cv::Rect bbox_rect(rect.x, rect.y, rect.w, rect.h);
     prims.emplace_back(render::Rect(bbox_rect, color, _thickness));
 
@@ -669,7 +672,7 @@ void Impl::preparePrimsForKeypointConnections(GstStructure *s, const std::vector
         int x2 = safe_convert<int>(rectangle.x + rectangle.w * x2_real);
         int y2 = safe_convert<int>(rectangle.y + rectangle.h * y2_real);
 
-        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i % 18], _thickness));
+        prims.emplace_back(render::ELine(cv::Point2i(x1, y1), cv::Point2i(x2, y2), colors[i % 21], _thickness));
     }
 
     g_value_array_free(point_connections);
