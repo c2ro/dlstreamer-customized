@@ -163,7 +163,7 @@ void FindPeaksBody::runNms(std::vector<cv::Point> &peaks, std::vector<std::vecto
 
 void FindPeaksBody::findPeaks(const std::vector<cv::Mat> &heat_maps, const float min_peaks_distance,
                               std::vector<std::vector<Peak>> &all_peaks, int heat_map_id) const {
-    const float threshold = 0.1f;
+    const float threshold = 0.08f; // was 0.1
     std::vector<cv::Point> peaks;
     const cv::Mat &heat_map = heat_maps[heat_map_id];
     const float *heat_map_data = heat_map.ptr<float>();
