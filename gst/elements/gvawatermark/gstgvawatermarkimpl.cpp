@@ -523,7 +523,7 @@ void Impl::preparePrimsForRoi(GVA::RegionOfInterest &roi, std::vector<render::Pr
 
     // put rectangle
     cv::Rect bbox_rect(rect.x, rect.y, rect.w, rect.h);
-    prims.emplace_back(render::Rect(bbox_rect, cv::Scalar(100, 78, 55);, _thickness));
+    prims.emplace_back(render::Rect(bbox_rect, cv::Scalar(100, 78, 55), _thickness));
 
     // put text
     if (text.str().size() != 0) {
