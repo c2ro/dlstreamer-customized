@@ -13,10 +13,20 @@
 #include <string>
 #include <vector>
 
+/*
+
 HumanPoseExtractor::HumanPoseExtractor(size_t keypoints_number, ResizeDeviceType maps_resize_device_type)
     : keypoints_number(keypoints_number), min_joints_number(3), stride(8), mean_pixel(cv::Vec3f::all(128)),
       min_peaks_distance(3.0f), mid_points_score_threshold(0.05f), found_mid_points_ratio_threshold(0.8f),
       min_subset_score(0.2f), upsample_ratio(4), maps_resize_device_type(maps_resize_device_type) {
+}
+
+*/
+
+HumanPoseExtractor::HumanPoseExtractor(size_t keypoints_number, ResizeDeviceType maps_resize_device_type)
+    : keypoints_number(keypoints_number), min_joints_number(3), stride(8), mean_pixel(cv::Vec3f::all(128)),
+      min_peaks_distance(2.0f), mid_points_score_threshold(0.04f), found_mid_points_ratio_threshold(0.7f),
+      min_subset_score(0.1f), upsample_ratio(4), maps_resize_device_type(maps_resize_device_type) {
 }
 
 HumanPoseExtractor::HumanPoses HumanPoseExtractor::postprocess(const float *heat_maps_data, const int heat_map_offset,
